@@ -5,7 +5,7 @@ An interactive web application that visualizes the relationships between Steam g
 **Live App:** [steam-tags-network-graph.streamlit.app](https://steam-tags-network-graph.streamlit.app/)
 
 ## Background
-This project is an evolution of the data visualization work I previously performed in Jupyter Notebooks for the **GameDiscoverCo newsletter** during Steam Next Fest reporting. My goal was to turn those static analytical scripts into a dynamic, user-friendly tool that anyone can use to explore Steam metadata.
+This project is an evolution of the data visualization work I previously performed in Jupyter Notebooks for the [GameDiscoverCo newsletter](https://newsletter.gamediscover.co/p/who-won-october-2025s-steam-next) during Steam Next Fest reporting. My goal was to turn those static analytical scripts into a dynamic, user-friendly tool that anyone can use to explore Steam metadata.
 
 ## Features
 - **Interactive Graph:** Drag, zoom, and explore nodes representing games and tags.
