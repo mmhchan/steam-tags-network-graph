@@ -133,33 +133,61 @@ def draw_graph(df, params):
                 width=1
             )
           
-    # Styling override for Pyvis configuration panel
-    css_override = """
+    # HTML, CSS, and JS injection for UI customization and high-res export
+    html_injection = """
     <style>
-        /* The main container for the buttons */
+        /* Stylize the Pyvis physics configuration panel */
         .vis-configuration-wrapper {
-            position: absolute !important;
-            top: 10px !important;
-            right: 10px !important;
-            width: 550px !important;
-            max-height: 80vh !important;
-            overflow-y: auto !important;
-            background: #ffffff !important;
-            color: #ffffff !important;
-            padding: 10px !important;
-            border-radius: 8px !important;
-            border: 2px solid #444444 !important;
-            z-index: 2000 !important;
-            display: block !important;
+            position: absolute !important; top: 10px !important; right: 10px !important;
+            width: 550px !important; max-height: 80vh !important; overflow-y: auto !important;
+            background: #ffffff !important; padding: 10px !important; border-radius: 8px !important;
+            border: 2px solid #444444 !important; z-index: 2000 !important; display: block !important;
         }
-        /* Force all text inside the panel to be white and readable */
-        .vis-configuration-wrapper * {
-            color: #000000 !important;
-            font-family: sans-serif !important;
+        .vis-configuration-wrapper * { color: #000000 !important; font-family: sans-serif !important; }
+        
+        /* Stylize the custom export button */
+        #high-res-btn {
+            position: absolute; top: 15px; left: 15px; z-index: 3000;
+            padding: 10px 15px; background-color: #2ECC71; color: white;
+            border: none; border-radius: 5px; cursor: pointer; font-family: sans-serif;
+            font-weight: bold; box-shadow: 0px 4px 6px rgba(0,0,0,0.1);
         }
+        #high-res-btn:hover { background-color: #27AE60; }
     </style>
+
+    <button id="high-res-btn">📸 Save 3x High-Res PNG</button>
+
+    <script>
+    document.getElementById('high-res-btn').onclick = function() {
+        const container = document.getElementById('mynetwork');
+        const canvas = container.getElementsByTagName('canvas')[0];
+        const scale = 3; 
+
+        // Cache original dimensions for restoration
+        const originalWidth = container.style.width;
+        const originalHeight = container.style.height;
+
+        // Upscale container to trigger high-density vector re-rendering
+        container.style.width = (canvas.width * scale) + "px";
+        container.style.height = (canvas.height * scale) + "px";
+
+        // Delay execution to allow the browser graphics engine to redraw the canvas
+        setTimeout(() => {
+            const link = document.createElement('a');
+            link.download = 'steam-tag-network-crisp.png';
+            link.href = canvas.toDataURL("image/png", 1.0);
+            link.click();
+
+            // Restore original UI dimensions
+            container.style.width = originalWidth;
+            container.style.height = originalHeight;
+        }, 500); 
+    };
+    </script>
     """
-    html_content = net.generate_html().replace('</head>', f'{css_override}</head>')
+
+    # Inject assets into the generated HTML and render the component
+    html_content = net.generate_html().replace('</head>', f'{html_injection}</head>')
     components.html(html_content, height=1000, scrolling=False)
 
 # --- EXECUTION ---
