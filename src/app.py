@@ -1,5 +1,6 @@
 import streamlit as st
 import pandas as pd
+import os
 from pyvis.network import Network
 from itertools import combinations
 import streamlit.components.v1 as components
@@ -39,12 +40,36 @@ graph_settings = [
     {"label": "Expansion", "type": "slider", "key": "spread", "min": -200, "max": -10, "cat": "Physics", "help": "How strongly nodes repel each other. More negative = more spread out."}
 ]
 
-# --- APP LAYOUT ---
+# --- APP CONFIG ---
 st.set_page_config(layout="wide", page_title="Steam Tag Network Graph Builder | by Michael Chan", page_icon="🎮")
 st.title("Steam Tag Network Graph Builder")
+
+# --- HELPER FUNCTIONS ---
+def load_changelog():
+    """Reads the changelog file from the root directory."""
+    if os.path.exists("changelog.md"):
+        with open("changelog.md", "r", encoding="utf-8") as f:
+            return f.read()
+    return "Changelog currently unavailable."
+
+# --- APP LAYOUT ---
+changelog_text = load_changelog()
+
 st.sidebar.header("Data")
-st.sidebar.markdown("Upload your CSV with columns: **Game, Tag 1, Tag 2, Tag 3, Tag 4, Tag 5**")
-uploaded_file = st.sidebar.file_uploader("Upload CSV", type=["csv"])
+st.sidebar.write("**Upload your own data:**") 
+st.sidebar.caption("Required columns: Game, Tag 1, Tag 2, Tag 3, Tag 4, Tag 5")
+uploaded_file = st.sidebar.file_uploader("Choose a CSV file", type=["csv"], label_visibility="collapsed")
+
+st.sidebar.write("") 
+
+with open("data/sample.csv", "rb") as file:
+    st.sidebar.download_button(
+        label="📥 Download Sample CSV",
+        data=file,
+        file_name="steam_tag_sample.csv",
+        mime="text/csv",
+        help="Use this template to format your data correctly."
+    )
 
 st.sidebar.header("Settings")
 exp_vis = st.sidebar.expander("Visual Styles", expanded=True)
@@ -69,6 +94,10 @@ st.sidebar.button("Restore Defaults", on_click=reset_params)
 st.sidebar.warning("⚠️ Changing settings will refresh the layout.")
 
 st.sidebar.markdown("---")
+
+with st.sidebar.expander("🛠️ Version History"):
+    st.markdown(changelog_text)
+
 st.sidebar.markdown(
     """
     <div style='text-align: center;'>
