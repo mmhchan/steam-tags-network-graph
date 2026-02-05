@@ -47,8 +47,8 @@ st.title("Steam Tag Network Graph Builder")
 # --- HELPER FUNCTIONS ---
 def load_changelog():
     """Reads the changelog file from the root directory."""
-    if os.path.exists("changelog.md"):
-        with open("changelog.md", "r", encoding="utf-8") as f:
+    if os.path.exists("CHANGELOG.md"):
+        with open("CHANGELOG.md", "r", encoding="utf-8") as f:
             return f.read()
     return "Changelog currently unavailable."
 
