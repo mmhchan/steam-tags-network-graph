@@ -40,7 +40,7 @@ graph_settings = [
 ]
 
 # --- APP LAYOUT ---
-st.set_page_config(layout="wide", page_title="Steam Tag Network Graph Builder")
+st.set_page_config(layout="wide", page_title="Steam Tag Network Graph Builder | by Michael Chan", page_icon="🎮")
 st.title("Steam Tag Network Graph Builder")
 st.sidebar.header("Data")
 st.sidebar.markdown("Upload your CSV with columns: **Game, Tag 1, Tag 2, Tag 3, Tag 4, Tag 5**")
@@ -67,6 +67,22 @@ for setting in graph_settings:
 
 st.sidebar.button("Restore Defaults", on_click=reset_params)
 st.sidebar.warning("⚠️ Changing settings will refresh the layout.")
+
+st.sidebar.markdown("---")
+st.sidebar.markdown(
+    """
+    <div style='text-align: center;'>
+        <p style='font-size: 0.8em;'>Built by <strong>Michael Chan</strong></p>
+        <a href='https://linkedin.com/in/mmhchan' style='text-decoration: none; margin-right: 10px;'>
+            <img src='https://cdn-icons-png.flaticon.com/512/174/174857.png' width='20'>
+        </a>
+        <a href='https://github.com/mmhchan' style='text-decoration: none;'>
+            <img src='https://cdn-icons-png.flaticon.com/512/25/25231.png' width='20'>
+        </a>
+    </div>
+    """,
+    unsafe_allow_html=True
+)
 
 # --- CORE LOGIC ---
 def draw_graph(df, params):

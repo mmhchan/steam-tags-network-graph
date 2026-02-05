@@ -35,3 +35,7 @@ If you are a developer and know a way to force `Pyvis` to include the labels in 
 - `src/app.py`: The Streamlit application logic.
 - `data/sample.csv`: Example dataset for user testing.
 - `requirements.txt`: Python dependencies.
+
+## ✉️ Contact
+Created by **Michael Chan**
+* **LinkedIn:** [linkedin.com/in/mmhchan](https://linkedin.com/in/mmhchan)
